@@ -15,10 +15,10 @@ api = Api(app)
 
 @app.route("/")
 def index():
-    return "Hello Moefukin world"
+    return render_template('index.html')
 
 @app.route('/fruit')
-def notdash():
+def fruit():
    df = pd.DataFrame({
       'Fruit': ['Apples', 'Oranges', 'Bananas', 'Apples', 'Oranges',
       'Bananas'],
@@ -33,7 +33,7 @@ def notdash():
 
 
 @app.route('/weather/<city>')
-def gov_api(city):
+def weather(city):
    url = f'https://api.weatherbit.io/v2.0/forecast/daily?city={city}&key=4be57259674a48259b9dbb74f75da13d&days=3&lat&lon'
    response = requests.get(url)
    data = response.json()
