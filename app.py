@@ -5,9 +5,11 @@ app = Flask(__name__)
 
 url = "https://fakestoreapi.com/products/"
 
+
 @app.route("/")
-def home_page():
-    return "Home Page"
+def index():
+    return "Hello this is the new version!"
+
 
 # @app.route("/api/<num>")
 # def get_product(num):
