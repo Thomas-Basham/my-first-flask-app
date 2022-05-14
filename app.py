@@ -1,38 +1,50 @@
 import random
 
 import requests
-from flask import Flask
+from flask import request, Flask, jsonify, render_template
+import pandas as pd
+import json
+import plotly
+import plotly.express as px
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
 
-url = "https://fakestoreapi.com/products/"
+api = Api(app)
 
 
 @app.route("/")
 def index():
-    return "Hello Mothefuckin world"
+    return "Hello Moefukin world"
+
+@app.route('/fruit')
+def notdash():
+   df = pd.DataFrame({
+      'Fruit': ['Apples', 'Oranges', 'Bananas', 'Apples', 'Oranges',
+      'Bananas'],
+      'Amount': [4, 1, 2, 2, 4, 5],
+      'City': ['SF', 'SF', 'SF', 'Montreal', 'Montreal', 'Montreal']
+   })
+   fig = px.bar(df, x='Fruit', y='Amount', color='City',
+      barmode='group')
+   graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('graph.html', graphJSON=graphJSON)
 
 
-# @app.route("/api/<num>")
-# def get_product(num):
-#     # if responses[num]:
-#     #     return responses[num]
-#     # else:
-#     if num:
-#         data = requests.get(url + num)
-#         parsed_data = data.json()
-#     responses[num] = parsed_data
-#     return responses
 
-# responses = {}
-# print(responses)
-# labels = [row[0] for row in responses]
-# values = [row[1] for row in responses]
-#
-#
-# @app.route()
-# def show_chart()
-
+@app.route('/weather/<city>')
+def gov_api(city):
+   url = f'https://api.weatherbit.io/v2.0/forecast/daily?city={city}&key=4be57259674a48259b9dbb74f75da13d&days=3&lat&lon'
+   response = requests.get(url)
+   data = response.json()
+   data.keys()
+   df = pd.DataFrame({'Date': [data['data'][0]['datetime'], data['data'][1]['datetime'], data['data'][2]['datetime']],
+                      'Temperature': [data['data'][0]['temp'], data['data'][1]['temp'], data['data'][2]['temp']],
+                      'High Temp': [data['data'][0]['max_temp'], data['data'][1]['max_temp'], data['data'][2]['max_temp']]
+                      })
+   fig = px.bar(df, x='Date', y='Temperature', color='High Temp', barmode='group')
+   graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('graph.html', graphJSON=graphJSON, city_name=city)
 
 
 
@@ -40,8 +52,7 @@ def index():
 # url = 'https://rest.coinapi.io/v1/exchangerate/BTC/USD/history?period_id=1MIN&time_start=2022-01-01T00:00:00&time_end=2022-05-10T00:00:00'
 # headers = {'X-CoinAPI-Key': '545A4363-65FD-4F81-A022-E910AE739497'}
 # response = requests.get(url, headers=headers)
-# print(response)
 # data = response.json()
-# print(data)
+
 
 
