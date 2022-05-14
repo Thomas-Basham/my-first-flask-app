@@ -1,3 +1,5 @@
+import random
+
 import requests
 from flask import Flask
 
@@ -8,7 +10,7 @@ url = "https://fakestoreapi.com/products/"
 
 @app.route("/")
 def index():
-    return "Hello this is the new version!"
+    return "Hello Mothefuckin world"
 
 
 # @app.route("/api/<num>")
@@ -32,9 +34,13 @@ def index():
 # def show_chart()
 
 
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
 
+    port = 5000 + random.randint(0, 999)
+    print(port)
+    url = "http://127.0.0.1:{0}".format(port)
+    print(url)
+    app.run(use_reloader=False, debug=True, port=port)
 
 # # url = 'https://rest.coinapi.io/v1/exchangerate/BTC/USD'
 # url = 'https://rest.coinapi.io/v1/exchangerate/BTC/USD/history?period_id=1MIN&time_start=2022-01-01T00:00:00&time_end=2022-05-10T00:00:00'
