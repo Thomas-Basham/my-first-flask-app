@@ -1,7 +1,7 @@
 import random
 
 import requests
-from flask import request, Flask, jsonify, render_template
+from flask import request, Flask, jsonify, render_template, redirect, url_for
 import pandas as pd
 import json
 import plotly
@@ -28,12 +28,12 @@ def fruit():
    fig = px.bar(df, x='Fruit', y='Amount', color='City',
       barmode='group')
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('graph.html', graphJSON=graphJSON)
+   return render_template('graph.html', graphJSON=graphJSON, heading=f"Fruit data")
 
 
-
-@app.route('/weather/<city>')
+@app.route('/weather/<city>', methods=["GET", "POST"])
 def weather(city):
+
    url = f'https://api.weatherbit.io/v2.0/forecast/daily?city={city}&key=4be57259674a48259b9dbb74f75da13d&days=3&lat&lon'
    response = requests.get(url)
    data = response.json()
@@ -44,7 +44,11 @@ def weather(city):
                       })
    fig = px.bar(df, x='Date', y='Temperature', color='High Temp', barmode='group')
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('graph.html', graphJSON=graphJSON, city_name=city)
+   if request.method == "POST":
+      weather_city = request.form.get("weather_city")
+      return redirect(url_for('weather', city=weather_city))
+
+   return render_template('graph.html', graphJSON=graphJSON, city_name=city, heading=f"Weather for {city} ")
 
 
 
