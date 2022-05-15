@@ -1,3 +1,3 @@
-from project.app import api as app
+from project import create_app
 if __name__ == '__main__':
-    app.run(threaded=True)
+    create_app()
