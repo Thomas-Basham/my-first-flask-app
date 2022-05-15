@@ -15,7 +15,7 @@ api = Api(app)
 
 @app.route("/")
 def index():
-    return render_template('index.html', name=current_user.name, welcome=f'Hello, {current_user.name}')
+    return render_template('index.html')  #, name=current_user.name, welcome=f'Hello, {current_user.name}'
 
 
 @app.route('/profile')

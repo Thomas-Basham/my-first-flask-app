@@ -1,3 +1,3 @@
-from project.app import app
+from project.app import api as app
 if __name__ == '__main__':
-    app.run(port=5000, threaded=True)
+    app.run(threaded=True)
