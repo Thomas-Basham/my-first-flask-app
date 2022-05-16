@@ -1,14 +1,12 @@
 import requests
-from flask import request, Flask, jsonify, render_template, redirect, url_for
+from flask import request, Flask, jsonify, render_template, redirect, url_for, Blueprint
 import pandas as pd
 import json
 import plotly
 import plotly.express as px
-from flask_restful import Resource, Api
-from flask import Blueprint
-from project import db
+from flask_restful import Api
 from flask_login import login_required, current_user
-# app = Flask(__name__)
+
 app = Blueprint('app', __name__)
 api = Api(app)
 
