@@ -24,9 +24,6 @@ def profile():
     return render_template('profile.html', name=current_user.name, email=current_user.email)
 
 
-
-
-
 @app.route('/fruit')
 def fruit():
    df = pd.DataFrame({
@@ -63,3 +60,5 @@ def weather(city):
    return render_template('graph.html', graphJSON=graphJSON, city_name=city, heading=f"Weather for {city}")
 
 
+if __name__ == '__main__':
+    app.run()
