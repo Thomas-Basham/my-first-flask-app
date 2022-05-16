@@ -1,3 +1,3 @@
-from project import create_app
-if __name__ == '__main__':
-    create_app()
+# from project.app import app
+# if __name__ == '__main__':
+#     app.run()
