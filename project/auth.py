@@ -6,9 +6,12 @@ from project import db
 
 auth = Blueprint('auth', __name__)
 # https://github.com/do-community/flask_auth_scotch
+
+
 @auth.route('/login')
 def login():
     return render_template('login.html')
+
 
 @auth.route('/login', methods=['POST'])
 def login_post():
@@ -28,9 +31,11 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('app.profile'))
 
+
 @auth.route('/signup')
 def signup():
     return render_template('signup.html')
+
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
@@ -53,6 +58,7 @@ def signup_post():
     db.session.commit()
 
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/logout')
 @login_required
