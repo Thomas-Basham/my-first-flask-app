@@ -1,2 +1,2 @@
-from project import app
-app.run()
+# from project import app
+# app.run()

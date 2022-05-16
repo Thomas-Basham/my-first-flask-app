@@ -4,7 +4,6 @@ from flask_login import LoginManager
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
-app = Flask(__name__)
 
 
 def create_app():
@@ -35,3 +34,5 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     return app
+
+
